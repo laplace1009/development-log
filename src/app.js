@@ -1,22 +1,29 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
-const {PrismaClient} = require('@prisma/client');
 const session = require('express-session');
 const registerUserRoute = require('./routes/registerUser');
 const loginUserRoute = require('./routes/login');
+const tokenRouter = require('./routes/token');
 
-const prisma = new PrismaClient();
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(session({
-    secret: 'key',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    cookie: { secure: true, httpOnly: true }
 }));
+
+app.get('/', (req, res) => {
+    if (req.session.views) {
+        req.session.views++;
+    } else {
+        req.session.views = 1;
+    }
+    res.send(`Number of views: ${req.session.views}`);
+})
 
 app.use(registerUserRoute)
 app.use(loginUserRoute)
@@ -25,6 +32,3 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log('Server is running on port', PORT);
 })
-
-
-app.listen(3000);
