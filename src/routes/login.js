@@ -29,7 +29,7 @@ router.post('/login', async (req, res) => {
             req.session.refreshToken = refreshToken;
             res.cookie('accessToken', accessToken, { httpOnly: true, secure: true });
 
-            req.session.userId = user.id;
+            req.session.userId = user.username;
             res.status(200).send('Login successfully');
         } else {
             res.status(401).send('Invalid Credentials');
@@ -39,10 +39,5 @@ router.post('/login', async (req, res) => {
         res.status(500).send('Sever Error');
     }
 });
-
-
-
-
-
 
 module.exports = router;
