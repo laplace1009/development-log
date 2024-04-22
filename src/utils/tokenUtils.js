@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const prismaClient = require("@prisma/client");
 const {PrismaClient} = require("@prisma/client/extension");
-const prima = new PrismaClient();
+const prisma = new PrismaClient();
 
 function generateAccessToken(data) {
     return jwt.sign(data, process.env.SECRET, {expiresIn: '15m'});
