@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
-const {generateAccessToken, generateRefreshToken} = require('../utils/tokenUtils');
+const {generateAccessToken, checkTokenAndRefresh} = require('../utils/tokenUtils');
 
 router.get('/login', (req, res) => {
     res.send(`
@@ -22,15 +22,19 @@ router.post('/login', async (req, res) => {
             where: { username },
         });
 
-        if (user && bcrypt.compareSync(password, user.password)) {
-            const accessToken = generateAccessToken(user);
-            const refreshToken = generateRefreshToken(user);
+        if (user) {
+            const validPassword = await bcrypt.compare(password, user.password);
+            if (validPassword) {
+                const accessToken = await generateAccessToken(user.id);
+                const refreshToken = await checkTokenAndRefresh(user.id)
+                req.session.refreshToken = refreshToken;
+                res.cookie('accessToken', accessToken, { httpOnly: true, secure: false });
 
-            req.session.refreshToken = refreshToken;
-            res.cookie('accessToken', accessToken, { httpOnly: true, secure: true });
-
-            req.session.userId = user.username;
-            res.status(200).send('Login successfully');
+                req.session.userId = user.username;
+                res.status(200).send('Login successful');
+            } else {
+                res.status(401).send('Invalid Credentials');
+            }
         } else {
             res.status(401).send('Invalid Credentials');
         }

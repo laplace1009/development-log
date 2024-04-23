@@ -13,8 +13,12 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true, httpOnly: true }
+    cookie: { secure: false, httpOnly: true }
 }));
+
+app.use(registerUserRoute)
+app.use(loginUserRoute)
+app.use(tokenRouter)
 
 app.get('/', (req, res) => {
     if (req.session.views) {
@@ -24,9 +28,6 @@ app.get('/', (req, res) => {
     }
     res.send(`Number of views: ${req.session.views}`);
 })
-
-app.use(registerUserRoute)
-app.use(loginUserRoute)
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

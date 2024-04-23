@@ -14,20 +14,22 @@ datasource db {
 }
 
 model User {
-    username    String     @unique
-    password    String
+  id          Int            @id @default(autoincrement())
+  username    String         @unique
+  password    String
+  token       RefreshToken?  // Nullable, 사용자가 토큰을 가지고 있지 않을 수도 있음
 
-    @@map("users")
+  @@map("users")
 }
 
 model RefreshToken {
-    id Int @id @default(autoincrement())
-    userId Int @unique
-    refreshToken String
-    createdAt DateTime @default(now())
-    expiresAt DateTime
+  id            Int       @id @default(autoincrement())
+  userId        Int       @unique
+  refreshToken  String
+  createdAt     DateTime  @default(now())
+  expiresAt     DateTime
 
-    user user @relation(fields: [userId], references: [id])
+  user          User      @relation(fields: [userId], references: [id])
 
-    @@map("refresh_tokens")
+  @@map("refresh_tokens")
 }
