@@ -3,12 +3,14 @@ const session = require('express-session');
 const registerUserRoute = require('./routes/registerUser');
 const loginUserRoute = require('./routes/login');
 const tokenRouter = require('./routes/token');
+const createRouter = require('./routes/create');
 
 const app = express();
 
+app.use(express.static(__dirname + '/../public/'));
+app.use(express.text())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -19,6 +21,7 @@ app.use(session({
 app.use(registerUserRoute)
 app.use(loginUserRoute)
 app.use(tokenRouter)
+app.use(createRouter)
 
 app.get('/', (req, res) => {
     if (req.session.views) {

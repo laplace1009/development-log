@@ -1,0 +1,15 @@
+textarea, #preview {
+    width: 60%;
+    margin: 20px;
+    height: 300px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    resize: none;
+}
+
+.hidden {
+    display: none;
+}
+button {
+    margin-left: 20px;
+}
