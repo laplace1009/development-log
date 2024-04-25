@@ -10,6 +10,11 @@ textarea, #preview {
 .hidden {
     display: none;
 }
-button {
+
+#previewBtn {
+    margin-left: 20px;
+}
+
+#create {
     margin-left: 20px;
 }

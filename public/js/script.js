@@ -19,3 +19,4 @@ document.getElementById('editBtn').addEventListener('click', () => {
     document.getElementById('markdown-editor').classList.remove('hidden');
     document.getElementById('preview').classList.add('hidden');
 });
+

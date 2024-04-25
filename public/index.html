@@ -11,9 +11,21 @@
     <button id="previewBtn">Preview</button>
     <button id="editBtn">Edit</button>
 </div>
-<textarea id="markdown-editor" placeholder="개발 일지 내용을 저장해주세요"></textarea>
-<div id="preview" class="hidden"></div>
-
+<form method="post" action="/create">
+    <textarea id="markdown-editor" placeholder="개발 일지 내용을 저장해주세요" name="editor" required></textarea>
+    <div id="preview" class="hidden"></div>
+    <div>
+        <lable for="language-selector">Choose a language: </lable>
+        <select id="language-selector" name="tag">
+            <option value="">--please select language--</option>
+            <option value="c++">C++</option>
+            <option value="typescript">Typescript</option>
+            <option value="javascript">Javascript</option>
+            <option value="scala">Scala</option>
+        </select>
+        <button id="create">submit</button>
+    </div>
+</form>
 <script src="js/script.js"></script>
 </body>
 </html>
