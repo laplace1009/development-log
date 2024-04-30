@@ -34,12 +34,34 @@ model RefreshToken {
   @@map("refresh_tokens")
 }
 
+model Language {
+  id        Int @id @default(autoincrement())
+  language  String @unique
+  project   Project?
+
+  @@map("languages")
+}
+
+model Project {
+  id          Int @id @default(autoincrement())
+  languageId  Int @unique
+  name        String
+  dLog        DevelopmentLog?
+
+  language Language @relation(fields: [languageId], references: [id])
+
+  @@map("projects")
+}
+
 model DevelopmentLog {
-  id  Int @id @default(autoincrement())
-  tag String
-  text String
+  id        Int @id @default(autoincrement())
+  projectId Int @unique
+  text      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("development_log")
+  project Project @relation(fields: [projectId], references: [id])
+
+  @@map("development_logs")
 }
+

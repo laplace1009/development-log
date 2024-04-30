@@ -3,7 +3,9 @@ const session = require('express-session');
 const registerUserRoute = require('./routes/registerUser');
 const loginUserRoute = require('./routes/login');
 const tokenRouter = require('./routes/token');
-const createRouter = require('./routes/create');
+const createRouter = require('./routes/createLog');
+const languageRouter = require('./routes/registerLanguage');
+const projectRegisterRouter = require('./routes/registerProject');
 
 const app = express();
 
@@ -22,6 +24,8 @@ app.use(registerUserRoute)
 app.use(loginUserRoute)
 app.use(tokenRouter)
 app.use(createRouter)
+app.use(languageRouter)
+app.use(projectRegisterRouter)
 
 app.get('/', (req, res) => {
     if (req.session.views) {
