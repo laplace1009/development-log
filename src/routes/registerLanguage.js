@@ -1,12 +1,13 @@
 const express = require('express');
 const {PrismaClient} = require("@prisma/client");
+const {getLanguages} = require("../services/registerLogField");
 const router = express.Router();
 const prisma = new PrismaClient();
 
 router.get('/language', (req, res) => {
     res.send(`
         <form method="POST" action="/language">
-            <input type="text" name="language" required="추가할 언어를 입력해주세요.">
+            <input type="text" name="language" placeholder="추가할 언어를 입력해주세요." required>
             <button type="submit">추가</button>
         </form>
     `)
@@ -16,7 +17,6 @@ router.post('/language', async (req, res) => {
     try {
         const { language: text } = req.body;
         const language = text.trim().toUpperCase();
-        console.log(language)
         const lang = await prisma.language.findUnique({
             where: {language},
         });
@@ -36,5 +36,10 @@ router.post('/language', async (req, res) => {
         res.status(500).send('server error');
     }
 });
+
+router.get('/language-list', async (req, res) => {
+    const languages = await getLanguages();
+    res.status(200).json(languages)
+})
 
 module.exports = router;

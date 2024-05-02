@@ -11,20 +11,22 @@ router.get('/create', async (req, res) => {
 
 router.post('/create', async (req, res) => {
     try {
-        const { editor, tag } = req.body;
+        const { language, project, editor } = req.body;
+        console.log(language, project, editor)
         await prisma.developmentLog.create({
             data: {
-                tag,
+                projectId: parseInt(project),
                 text: editor,
             }
         })
+        res.status(200).redirect('/')
     } catch (e) {
         res.status(500).send('server error')
         console.error(`created error ${e}`)
     }
 })
 
-router.patch('/update:id', async (req, res) => {
+router.patch('/update/:id', async (req, res) => {
     const { id } = req.params;
     const {text} = req.body;
     try {

@@ -46,7 +46,7 @@ model Project {
   id          Int @id @default(autoincrement())
   languageId  Int @unique
   name        String
-  dLog        DevelopmentLog?
+  dLog        DevelopmentLog[]
 
   language Language @relation(fields: [languageId], references: [id])
 
@@ -55,7 +55,7 @@ model Project {
 
 model DevelopmentLog {
   id        Int @id @default(autoincrement())
-  projectId Int @unique
+  projectId Int
   text      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -1,20 +1,21 @@
 const express = require('express');
 const {PrismaClient} = require("@prisma/client");
+const {getProject} = require("../services/registerLogField");
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.get('/registerProject', async (req, res) => {
+router.get('/register-project', async (req, res) => {
     try {
         const languages = await prisma.language.findMany();
         const innerHtml = languages.reduce(
             (a, b) =>
                 `${a}<option value="${b.id}">${b.language}</option>`, `<option value="">언어를 선택해주세요.</option>`);
         res.send(`
-        <form method="POST" action="/registerProject">
+        <form method="POST" action="/register-project">
             <select name="languageId">
                 ${innerHtml}
             </select>
-            <input type="text" name="name" required="추가할 프로젝트를 입력해주세요.">
+            <input type="text" name="name" placeholder="추가할 프로젝트를 입력해주세요." required>
             <button type="submit">추가</button>
         </form>
     `)
@@ -24,7 +25,7 @@ router.get('/registerProject', async (req, res) => {
     }
 });
 
-router.post('/registerProject', async (req, res) => {
+router.post('/register-project', async (req, res) => {
     try {
         const { languageId, name:text } = req.body;
         const name = text.trim();
@@ -51,5 +52,11 @@ router.post('/registerProject', async (req, res) => {
         res.status(500).send('server error');
     }
 });
+
+router.get('/project-list/:id', async (req, res) => {
+    const id = parseInt(req.params.id);
+    const projects = await getProject(id);
+    res.status(200).json(projects);
+})
 
 module.exports = router;

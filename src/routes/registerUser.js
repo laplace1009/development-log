@@ -4,9 +4,9 @@ const bcrypt = require('bcrypt');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-router.get('/register', (req, res) => {
+router.get('/register-user', (req, res) => {
     res.send(`
-    <form method="POST" action="/register">
+    <form method="POST" action="/register-user">
       <input type="text" name="username" required placeholder="Enter your id">
       <input type="password" name="password" required placeholder="Enter your password">
       <button type="submit">Login</button>
@@ -14,7 +14,7 @@ router.get('/register', (req, res) => {
   `);
 });
 
-router.post('/register', async (req, res) => {
+router.post('/register-user', async (req, res) => {
     try {
         const { username, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
