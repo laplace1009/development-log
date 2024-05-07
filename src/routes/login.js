@@ -1,18 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
 const bcrypt = require('bcrypt');
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 const {generateAccessToken, checkTokenAndRefresh} = require('../utils/tokenUtils');
 
-router.get('/login', (req, res) => {
-    res.send(`
-    <form method="POST" action="/login">
-      <input type="text" name="username" required placeholder="아이디를 입력 해주세요.">
-      <input type="password" name="password" required placeholder="비밀번호를 입력 해주세요">
-      <button type="submit">로그인</button>
-    </form>
-  `);
+router.get('/login', async (req, res) => {
+    await res.sendFile(path.join(__dirname, '..', '..', 'public', 'html', 'login.html'))
 });
 
 router.post('/login', async (req, res) => {

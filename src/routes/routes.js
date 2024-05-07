@@ -1,15 +1,14 @@
 const express = require('express');
+const path = require('path');
 const router = express.Router();
 
 
-router.get('/', (req, res) => {
-    if (req.session.views) {
-        req.session.views++;
-    } else {
-        req.session.views = 1;
+router.get('/', async (req, res) => {
+    try {
+        await res.sendFile(path.join(__dirname, '..', '..', 'public', 'html', 'index.html'));
+    } catch (e) {
+        console.error(e);
     }
-    // res.send(`Number of views: ${req.session.views}`);
-    res.status(200).send(`<h1>DevelopmentLog!!!</h1>`)
 })
 
 const registerUserRoute = require('./registerLanguage');

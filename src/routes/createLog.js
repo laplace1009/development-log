@@ -6,7 +6,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 router.get('/create', async (req, res) => {
-   await res.sendFile(path.join(__dirname, '..', '..', 'public', 'index.html'));
+   await res.sendFile(path.join(__dirname, '..', '..', 'public', 'html', 'create.html'));
 });
 
 router.post('/create', async (req, res) => {
