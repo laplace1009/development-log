@@ -17,6 +17,8 @@ const tokenRouter = require('./token');
 const createRouter = require('./createLog');
 const languageRouter = require('./registerLanguage');
 const projectRegisterRouter = require('./registerProject');
+const mainViewRouter = require('./mainView');
+
 
 router.use(registerUserRoute);
 router.use(loginUserRoute);
@@ -24,6 +26,7 @@ router.use(tokenRouter);
 router.use(createRouter);
 router.use(languageRouter);
 router.use(projectRegisterRouter);
+router.use(mainViewRouter);
 
 module.exports = router;
 
