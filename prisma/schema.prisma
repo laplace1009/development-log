@@ -37,7 +37,7 @@ model RefreshToken {
 model Language {
   id        Int @id @default(autoincrement())
   language  String @unique
-  project   Project?
+  project   Project[]
 
   @@map("languages")
 }
