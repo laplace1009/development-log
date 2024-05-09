@@ -1,0 +1,12 @@
+ul {
+    padding: 0;
+}
+
+li::before {
+    content: "• ";
+}
+
+li {
+    display: inline-block;
+    margin-right: 15px;
+}

@@ -1,6 +1,6 @@
 const main = document.getElementById('languages')
 const createUl = (language) => `<ul>${language}</ul>`
-const createLi = (project) => `<li>${project}</li>`
+const createLi = (project) => `<li><a>${project}</a></li>`
 const createProjectList = (projectList) =>
     projectList.reduce((acc, {language, project}) =>
         createUl(language).concat(project.reduce((acc, {name}) =>
