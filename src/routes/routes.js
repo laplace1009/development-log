@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const router = express.Router();
 
-
 router.get('/', async (req, res) => {
     try {
         await res.sendFile(path.join(__dirname, '..', '..', 'public', 'html', 'index.html'));
@@ -18,7 +17,7 @@ const createRouter = require('./createLog');
 const languageRouter = require('./registerLanguage');
 const projectRegisterRouter = require('./registerProject');
 const mainViewRouter = require('./mainView');
-
+const projectListRouter = require('./project');
 
 router.use(registerUserRoute);
 router.use(loginUserRoute);
@@ -26,6 +25,7 @@ router.use(tokenRouter);
 router.use(createRouter);
 router.use(languageRouter);
 router.use(projectRegisterRouter);
+router.use(projectListRouter);
 router.use(mainViewRouter);
 
 module.exports = router;

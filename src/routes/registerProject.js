@@ -29,7 +29,7 @@ router.post('/register-project', async (req, res) => {
     try {
         const { languageId, name:text } = req.body;
         const name = text.trim();
-        const lang = await prisma.project.findUnique({
+        const lang = await prisma.project.findFirst({
             where: {
                 languageId: parseInt(languageId),
                 name,
@@ -52,11 +52,5 @@ router.post('/register-project', async (req, res) => {
         res.status(500).send('server error');
     }
 });
-
-router.get('/project-list/:id', async (req, res) => {
-    const id = parseInt(req.params.id);
-    const projects = await getProject(id);
-    res.status(200).json(projects);
-})
 
 module.exports = router;
