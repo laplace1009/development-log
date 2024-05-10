@@ -1,6 +1,5 @@
 const express = require('express');
 const {PrismaClient} = require("@prisma/client");
-const {getProject} = require("../services/registerLogField");
 const router = express.Router();
 const prisma = new PrismaClient();
 

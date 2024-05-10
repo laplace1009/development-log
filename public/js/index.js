@@ -1,6 +1,6 @@
+import {createLi, createUl} from "./utils.js";
+
 const main = document.getElementById('languages')
-const createUl = (language) => `<ul>${language}</ul>`
-const createLi = (project) => `<li><a>${project}</a></li>`
 const createProjectList = (projectList) =>
     projectList.reduce((acc, {language, project}) =>
         createUl(language).concat(project.reduce((acc, {name}) =>
@@ -13,9 +13,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             headers: {'Content-Type': 'application/json'},
         });
         const projectList = await response.json();
-        const str = createProjectList(projectList)
-        main.innerHTML = str;
-        console.log(str);
+        console.log(createProjectList(projectList))
+        main.innerHTML = createProjectList(projectList)
     } catch (error) {
         console.error(error)
     }

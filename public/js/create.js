@@ -1,8 +1,7 @@
-// public/script.js 파일
+import {createOption} from "./utils.js";
 
 const languageElem = document.getElementById('language-selector');
 const projectElem = document.getElementById('project-selector');
-const optionElemCreater = ({id, text}) => `<option value="${id}">${text}</option>`;
 
 document.getElementById('previewBtn').addEventListener('click', () => {
     const markdownText = document.getElementById('markdown-editor').value;
@@ -33,8 +32,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
         const languages = await response.json();
         languageElem.innerHTML = languages.reduce(
-            (acc, {id, language: text}) => acc.concat(optionElemCreater({id, text})), optionElemCreater({id: '', text: 'choose language'}));
-        projectElem.innerHTML = optionElemCreater({id: '', text: 'choose project'});
+            (acc, {id, language: text}) =>
+                acc.concat(createOption({id, text})), createOption({id: '', text: 'choose language'}));
+        projectElem.innerHTML = createOption({id: '', text: 'choose project'});
     } catch (e) {
         console.error(e);
     }
@@ -49,7 +49,7 @@ document.getElementById('language-selector').addEventListener('change', async ()
         const projects = await response.json();
         projectElem.innerHTML =  projects.reduce(
             (acc, {id, name}) =>
-                acc.concat(optionElemCreater({id: id, text: name})), optionElemCreater({id: '', text: 'choose project'}));
+                acc.concat(createOption({id: id, text: name})), createOption({id: '', text: 'choose project'}));
     } catch (e) {
         console.error(e);
     }

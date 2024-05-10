@@ -5,7 +5,6 @@ async function getLanguages() {
     return prisma.language.findMany()
 }
 
-
 async function getProject(id) {
     return prisma.project.findMany({
         where: {
