@@ -18,6 +18,7 @@ const languageRouter = require('./registerLanguage');
 const projectRegisterRouter = require('./registerProject');
 const mainViewRouter = require('./mainView');
 const projectListRouter = require('./project');
+const uploadRouter = require('./upload');
 
 router.use(registerUserRoute);
 router.use(loginUserRoute);
@@ -27,6 +28,7 @@ router.use(languageRouter);
 router.use(projectRegisterRouter);
 router.use(projectListRouter);
 router.use(mainViewRouter);
+router.use(uploadRouter);
 
 module.exports = router;
 

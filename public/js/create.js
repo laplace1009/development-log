@@ -1,5 +1,6 @@
 import {createOption} from "./utils.js";
 
+const text = document.getElementById('markdown-editor');
 const languageElem = document.getElementById('language-selector');
 const projectElem = document.getElementById('project-selector');
 
@@ -53,5 +54,21 @@ document.getElementById('language-selector').addEventListener('change', async ()
     } catch (e) {
         console.error(e);
     }
+})
+
+document.getElementById('register').addEventListener('click', async (e) => {
+    e.preventDefault();
+    try {
+        const response = await fetch(`/upload`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ content: {project: projectElem.value, text: text.value} }),
+        });
+        const { redirect } = await response.json();
+        window.location.href = `http://localhost:8080${redirect}`
+    } catch (e) {
+        console.error(e);
+    }
+    // console.log(text.value)
 })
 

@@ -1,10 +1,11 @@
 textarea, #preview {
-    width: 60%;
+    width: 50%;
     margin: 20px;
-    height: 300px;
+    height: 600px;
     border: 1px solid #ccc;
     padding: 10px;
     resize: none;
+    overflow: auto;
 }
 
 .hidden {
