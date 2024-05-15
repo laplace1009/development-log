@@ -7,19 +7,23 @@
     <link rel="stylesheet" href="../css/create.css">
 </head>
 <body>
-<div>
-    <button id="previewBtn">Preview</button>
-    <button id="editBtn">Edit</button>
-</div>
-<form method="post" action="/create">
+<div class="editor-container">
+    <div class="header-container">
+        <button id="editBtn">Edit</button>
+        <button id="previewBtn">Preview</button>
+        <button id="invertBtn">Invert Colors</button>
+    </div>
     <textarea id="markdown-editor" placeholder="개발 일지 내용을 저장해주세요" name="editor" required></textarea>
     <div id="preview" class="hidden"></div>
-    <div>
-        <select id="language-selector" name="language"></select>
-        <select id="project-selector" name="project"></select>
-        <button id="register">submit</button>
-    </div>
-</form>
+    <form method="post" action="/create">
+        <div class="form-controls">
+            <select id="language-selector" name="language"></select>
+            <select id="project-selector" name="project"></select>
+            <button id="register">submit</button>
+        </div>
+    </form>
+</div>
+
 <script type="module" src="../js/create.js"></script>
 </body>
 </html>

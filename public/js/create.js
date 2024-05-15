@@ -1,28 +1,37 @@
 import {createOption} from "./utils.js";
 
-const text = document.getElementById('markdown-editor');
+const markdownElem = document.getElementById('markdown-editor');
 const languageElem = document.getElementById('language-selector');
 const projectElem = document.getElementById('project-selector');
+const previewDiv = document.getElementById('preview');
+const getMarkdownText = () => markdownElem.value;
+const curryingWithConvert = (text, ...args) => f => b => text ? b(f, text, ...args) : f(text, ...args)
+const preview = (text, div) => {
+    div.innerHTML = text;
+    previewDiv.classList.remove('hidden');
+    document.getElementById('markdown-editor').classList.add('hidden');
+}
 
-document.getElementById('previewBtn').addEventListener('click', () => {
-    const markdownText = document.getElementById('markdown-editor').value;
-    const previewDiv = document.getElementById('preview');
-    fetch('/convert', {
+const convert = async (f, text, ...args) => {
+    const response = await fetch('/convert', {
         method: 'POST',
-        headers: { 'Content-Type': 'text/plain' },
-        body: markdownText,
-    })
-        .then(response => response.text())
-        .then(html => {
-            previewDiv.innerHTML = html;
-            previewDiv.classList.remove('hidden');
-            document.getElementById('markdown-editor').classList.add('hidden');
-        });
-});
+        headers: {'Content-Type': 'text/plain'},
+        body: text,
+    });
+    const htmlText = await response.text();
+    f(htmlText, ...args);
+}
+
+document.getElementById('previewBtn').addEventListener('click', async () =>
+    curryingWithConvert(getMarkdownText(), previewDiv)(preview)(convert));
 
 document.getElementById('editBtn').addEventListener('click', () => {
     document.getElementById('markdown-editor').classList.remove('hidden');
     document.getElementById('preview').classList.add('hidden');
+});
+
+document.getElementById('invertBtn').addEventListener('click', function() {
+    document.body.classList.toggle('invert');
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
