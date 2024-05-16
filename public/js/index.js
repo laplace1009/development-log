@@ -6,7 +6,17 @@ const createProjectList = (projectList) =>
         createUl(language).concat(project.reduce((acc, project) =>
             acc.concat(createLi(project)), ``)), ``)
 
+const applyOSTheme = () => {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (isDarkMode) {
+        document.body.classList.remove('invert');
+    } else {
+        document.body.classList.add('invert');
+    }
+};
+
 document.addEventListener('DOMContentLoaded', async () => {
+    applyOSTheme();
     try {
         const response = await fetch('/main-view', {
             method: 'GET',
@@ -18,3 +28,5 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error(error)
     }
 })
+
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyOSTheme);

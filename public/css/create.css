@@ -1,3 +1,4 @@
+/* 기본 다크모드 및 라이트모드 설정 */
 :root {
     --bg-color: #0d1117;
     --text-color: #c9d1d9;
@@ -6,12 +7,33 @@
     --button-bg-color: #21262d;
 }
 
-.invert {
+@media (prefers-color-scheme: light) {
+    :root {
+        --bg-color: #ffffff;
+        --text-color: #000000;
+        --container-bg-color: #f0f0f0;
+        --border-color: #c0c0c0;
+        --button-bg-color: #d0d0d0;
+    }
+}
+
+/* 색상 반전 테마 */
+body.invert {
     --bg-color: #ffffff;
     --text-color: #000000;
     --container-bg-color: #f0f0f0;
     --border-color: #c0c0c0;
     --button-bg-color: #d0d0d0;
+}
+
+@media (prefers-color-scheme: light) {
+    body.invert {
+        --bg-color: #0d1117;
+        --text-color: #c9d1d9;
+        --container-bg-color: #161b22;
+        --border-color: #30363d;
+        --button-bg-color: #21262d;
+    }
 }
 
 body {
@@ -23,7 +45,7 @@ body {
     box-sizing: border-box;
     height: 100vh;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
 }
 
 .editor-container {
@@ -33,9 +55,10 @@ body {
     border-radius: 6px;
     background-color: var(--container-bg-color);
     margin: 16px;
-    flex: 1;
     padding: 16px;
     box-sizing: border-box;
+    max-width: 1000px;
+    width: 100%;
 }
 
 .header-container {
@@ -56,4 +79,46 @@ button {
 
 button:hover {
     background-color: var(--border-color);
+}
+
+textarea, #preview {
+    width: 100%;
+    background-color: var(--container-bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 16px;
+    line-height: 1.5;
+    resize: none;
+    flex: 1;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+.hidden {
+    display: none;
+    overflow: auto;
+}
+
+.form-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    background-color: var(--container-bg-color);
+}
+
+select {
+    background-color: var(--button-bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+li a {
+    display: inline-block;
+    margin-right: 30px;
+    color: var(--text-color);
 }

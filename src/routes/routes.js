@@ -11,14 +11,15 @@ router.get('/', async (req, res) => {
 })
 
 const registerUserRoute = require('./registerLanguage');
-const loginUserRoute = require('./login');
+const loginUserRoute = require('./loginRoute');
 const tokenRouter = require('./token');
 const createRouter = require('./createLog');
 const languageRouter = require('./registerLanguage');
 const projectRegisterRouter = require('./registerProject');
-const mainViewRouter = require('./mainView');
-const projectListRouter = require('./project');
+const mainViewRouter = require('./mainRoute');
+const projectListRouter = require('./projectRoute');
 const uploadRouter = require('./upload');
+const developmentLogRouter = require('./developmentLogRoute');
 
 router.use(registerUserRoute);
 router.use(loginUserRoute);
@@ -29,6 +30,7 @@ router.use(projectRegisterRouter);
 router.use(projectListRouter);
 router.use(mainViewRouter);
 router.use(uploadRouter);
+router.use(developmentLogRouter);
 
 module.exports = router;
 
