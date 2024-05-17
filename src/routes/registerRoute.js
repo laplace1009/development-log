@@ -4,15 +4,15 @@ const marked= require('marked');
 const path = require('path');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const authMiddleware = require('../middleware/authMiddleware');
 
-router.get('/create', async (req, res) => {
+router.get('/create', authMiddleware, async (req, res) => {
    await res.sendFile(path.join(__dirname, '..', '..', 'public', 'html', 'create.html'));
 });
 
-router.post('/create', async (req, res) => {
+router.post('/create', authMiddleware, async (req, res) => {
     try {
         const { language, project, editor } = req.body;
-        console.log(language, project, editor)
         await prisma.developmentLog.create({
             data: {
                 projectId: parseInt(project),
@@ -26,7 +26,7 @@ router.post('/create', async (req, res) => {
     }
 })
 
-router.patch('/update/:id', async (req, res) => {
+router.patch('/update/:id', authMiddleware, async (req, res) => {
     const { id } = req.params;
     const {text} = req.body;
     try {

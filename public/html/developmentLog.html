@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개발일지</title>
+    <link rel="stylesheet" href="../css/developmentLog.css">
+</head>
+<body>
+<div class="editor-container">
+    <div class="header-container">
+        <button id="editBtn" class="hidden">Edit</button>
+        <button id="previewBtn" class="hidden">Preview</button>
+        <button id="invertBtn">Invert Colors</button>
+    </div>
+    <textarea id="markdown-editor" placeholder="개발 일지 내용을 저장해주세요" name="editor" required class="hidden"></textarea>
+    <div id="preview"></div>
+    <form>
+        <div class="form-controls">
+            <select id="language-selector" name="language" class="hidden"></select>
+            <select id="project-selector" name="project" class="hidden"></select>
+            <button id="modify" type="submit" class="hidden">Modify</button>
+        </div>
+    </form>
+</div>
+<script type="module" src="../js/developmentLog.js"></script>
+</body>
+</html>

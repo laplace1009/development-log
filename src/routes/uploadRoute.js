@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
+const authMiddleware = require('../middleware/authMiddleware');
 
-router.post('/upload', async (req, res) => {
+router.post('/upload', authMiddleware, async (req, res) => {
     try {
         const { project, text } = req.body.content;
         await prisma.developmentLog.create({

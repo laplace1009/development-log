@@ -38,15 +38,13 @@ document.getElementById('invertBtn').addEventListener('click', function () {
 const applyOSTheme = () => {
     const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (isDarkMode) {
-        document.body.classList.remove('invert');
-    } else {
         document.body.classList.add('invert');
+    } else {
+        document.body.classList.remove('invert');
     }
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
-    applyOSTheme();
-
     try {
         const response = await fetch(`/language-list`, {
             method: 'GET',

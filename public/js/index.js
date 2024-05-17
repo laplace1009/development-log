@@ -15,8 +15,11 @@ const applyOSTheme = () => {
     }
 };
 
+document.getElementById('invertBtn').addEventListener('click', function () {
+    document.body.classList.toggle('invert');
+});
+
 document.addEventListener('DOMContentLoaded', async () => {
-    applyOSTheme();
     try {
         const response = await fetch('/main-view', {
             method: 'GET',

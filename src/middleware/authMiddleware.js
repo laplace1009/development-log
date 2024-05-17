@@ -1,14 +1,12 @@
 const jwt = require("jsonwebtoken");
 
 function authenticateToken(req, res, next) {
-    const authHeader = req.headers.authorization;
-    const token = authHeader && authHeader.split(' ')[1];
-
+    const token = req.cookies.accessToken;
     if (token == null) {
         return res.sendStatus(401); // 토큰이 없으면 401 Unauthorized 응답
     }
 
-    jwt.verify(token, process.env.SECRET, (err, user) => {
+    jwt.verify(token, process.env.ACCESS_SECRET_KEY, (err, user) => {
         if (err) {
             return res.sendStatus(403); // 토큰 검증 실패시 403 Forbidden 응답
         }

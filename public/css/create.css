@@ -17,7 +17,6 @@
     }
 }
 
-/* 색상 반전 테마 */
 body.invert {
     --bg-color: #ffffff;
     --text-color: #000000;

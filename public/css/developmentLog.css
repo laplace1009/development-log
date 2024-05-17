@@ -17,7 +17,6 @@
     }
 }
 
-/* 색상 반전 테마 */
 body.invert {
     --bg-color: #ffffff;
     --text-color: #000000;
@@ -79,6 +78,42 @@ button {
 
 button:hover {
     background-color: var(--border-color);
+}
+
+textarea, #preview {
+    width: 100%;
+    background-color: var(--container-bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 16px;
+    line-height: 1.5;
+    resize: none;
+    flex: 1;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+.hidden {
+    display: none;
+    overflow: auto;
+}
+
+.form-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    background-color: var(--container-bg-color);
+}
+
+select {
+    background-color: var(--button-bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 14px;
 }
 
 li a {

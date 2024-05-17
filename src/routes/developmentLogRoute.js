@@ -15,7 +15,9 @@ router.get('/development/:id', async (req, res) => {
                 id: id,
             }
         });
-        const htmlContent = await marked.marked(project.text);
+
+        const text = marked.marked(project.text)
+
         res.status(200).send(`
         <!DOCTYPE html>
         <html lang="ko">
@@ -28,14 +30,33 @@ router.get('/development/:id', async (req, res) => {
         <body>
         <div class="editor-container">
             <div class="header-container">
+                <button id="editBtn" class="hidden">Edit</button>
+                <button id="previewBtn" class="hidden">Preview</button>
                 <button id="invertBtn">Invert Colors</button>
             </div>
-            <div id="preview">${htmlContent}</div>
+            <textarea id="markdown-editor" placeholder="개발 일지 내용을 저장해주세요" name="editor" required class="hidden"></textarea>
+            <div id="preview"></div>
+            <form class="hidden">
+                <div class="form-controls">
+                    <select id="language-selector" name="language"></select>
+                    <select id="project-selector" name="project"></select>
+                    <button id="modify" type="submit">Modify</button>
+                </div>
+            </form>
         </div>
         <script>
             document.getElementById('invertBtn').addEventListener('click', function() {
                 document.body.classList.toggle('invert');
             });
+            
+            document.addEventListener('DOMContentLoaded', async () => {
+                document.getElementById('preview').innerHTML = \`${text}\`
+                // if (document.cookie.split('; ').some(cookie => cookie.startsWith('accessToken'))) {
+                //     document.querySelectorAll('.hidden').forEach(el => {
+                //         el.classList.remove('hidden');
+                //     }))
+                // }
+            })
             
             const applyOSTheme = () => {
                 const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;

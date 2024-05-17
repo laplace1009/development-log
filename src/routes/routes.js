@@ -10,25 +10,23 @@ router.get('/', async (req, res) => {
     }
 })
 
-const registerUserRoute = require('./registerLanguage');
-const loginUserRoute = require('./loginRoute');
-const tokenRouter = require('./token');
-const createRouter = require('./createLog');
-const languageRouter = require('./registerLanguage');
-const projectRegisterRouter = require('./registerProject');
-const mainViewRouter = require('./mainRoute');
-const projectListRouter = require('./projectRoute');
-const uploadRouter = require('./upload');
+const userRouter = require('./userRoute');
+const loginRouter = require('./loginRoute');
+const tokenRouter = require('./tokenRoute');
+const createRouter = require('./registerRoute');
+const languageRouter = require('./languageRoute');
+const mainRouter = require('./mainRoute');
+const projectRouter = require('./projectRoute');
+const uploadRouter = require('./uploadRoute');
 const developmentLogRouter = require('./developmentLogRoute');
 
-router.use(registerUserRoute);
-router.use(loginUserRoute);
+router.use(userRouter);
+router.use(loginRouter);
 router.use(tokenRouter);
 router.use(createRouter);
 router.use(languageRouter);
-router.use(projectRegisterRouter);
-router.use(projectListRouter);
-router.use(mainViewRouter);
+router.use(mainRouter);
+router.use(projectRouter);
 router.use(uploadRouter);
 router.use(developmentLogRouter);
 
