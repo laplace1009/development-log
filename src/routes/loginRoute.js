@@ -2,9 +2,8 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const bcrypt = require('bcrypt');
-const {PrismaClient} = require('@prisma/client');
-const prisma = new PrismaClient();
 const {generateAccessToken, checkTokenAndRefresh} = require('../utils/tokenUtils');
+const {getUser} = require("../services/developmentLog");
 
 router.get('/login', async (req, res) => {
     await res.sendFile(path.join(__dirname, '..', '..', 'public', 'html', 'login.html'))
@@ -13,15 +12,12 @@ router.get('/login', async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const { username, password } = req.body;
-        const user = await prisma.user.findUnique({
-            where: { username },
-        });
+        const user = await getUser(username);
         if (user) {
             const validPassword = await bcrypt.compare(password, user.password);
             if (validPassword) {
                 const accessToken = await generateAccessToken(user.id);
-                const refreshToken = await checkTokenAndRefresh(user.id)
-                req.session.refreshToken = refreshToken;
+                req.session.refreshToken = await checkTokenAndRefresh(user.id)
 
                 res.cookie('accessToken', accessToken, { httpOnly: false, secure: false });
 

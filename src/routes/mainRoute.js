@@ -1,16 +1,11 @@
 const express = require('express');
-const {PrismaClient} = require('@prisma/client');
+const {getLanguageListWithProjectList} = require("../services/developmentLog");
 router = express.Router();
-const prisma = new PrismaClient();
 
 router.get('/main-view', async (req, res) => {
     try {
-        const temp = await prisma.language.findMany({
-            include: {
-                project: true,
-            }
-        })
-        res.status(200).json(temp)
+        const languageListAndProjectList = await getLanguageListWithProjectList()
+        res.status(200).json(languageListAndProjectList)
     } catch (e) {
         console.error(e);
     }

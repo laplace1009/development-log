@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             headers: {'Content-Type': 'application/json'},
         });
         const projectList = await response.json();
+        console.log(projectList);
         main.innerHTML = createProjectList(projectList)
     } catch (error) {
         console.error(error)

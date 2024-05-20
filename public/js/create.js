@@ -1,4 +1,4 @@
-import { createOption } from "./utils.js";
+import {applyOSTheme, createOption} from "./utils.js";
 
 const markdownElem = document.getElementById('markdown-editor');
 const languageElem = document.getElementById('language-selector');
@@ -33,16 +33,6 @@ document.getElementById('editBtn').addEventListener('click', () => {
 document.getElementById('invertBtn').addEventListener('click', function () {
     document.body.classList.toggle('invert');
 });
-
-// OS 테마 설정 감지 및 적용
-const applyOSTheme = () => {
-    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (isDarkMode) {
-        document.body.classList.add('invert');
-    } else {
-        document.body.classList.remove('invert');
-    }
-};
 
 document.addEventListener('DOMContentLoaded', async () => {
     try {

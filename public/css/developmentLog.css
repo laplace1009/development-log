@@ -121,3 +121,7 @@ li a {
     margin-right: 30px;
     color: var(--text-color);
 }
+
+.admin {
+    display: none;
+}

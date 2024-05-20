@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const {PrismaClient} = require('@prisma/client');
 const {createUl, createLi} = require("../utils/element");
-const prisma = new PrismaClient();
 const authMiddleware = require('../middleware/authMiddleware');
+const {getProject, createProject, getProjectList, getLanguageList, getDevelopmentLogList} = require("../services/developmentLog");
 
 router.get('/register-project', authMiddleware, async (req, res) => {
     try {
-        const languages = await prisma.language.findMany();
+        const languages = await getLanguageList();
         const innerHtml = languages.reduce(
             (a, b) =>
                 `${a}<option value="${b.id}">${b.language}</option>`, `<option value="">언어를 선택해주세요.</option>`);
@@ -30,22 +29,12 @@ router.post('/register-project', authMiddleware, async (req, res) => {
     try {
         const { languageId, name:text } = req.body;
         const name = text.trim();
-        const lang = await prisma.project.findFirst({
-            where: {
-                languageId: parseInt(languageId),
-                name,
-            }
-        });
+        const lang = await getProject(languageId);
 
         if (lang) {
             res.status(200).send('exist project');
         } else {
-            await prisma.project.create({
-                data: {
-                    languageId: parseInt(languageId),
-                    name,
-                }
-            })
+            await createProject(languageId, name);
             res.status(200).send('successfully registered');
         }
     } catch (e) {
@@ -56,7 +45,7 @@ router.post('/register-project', authMiddleware, async (req, res) => {
 
 router.get('/project-list', async (req, res) => {
     try {
-        const projects = await prisma.project.findMany()
+        const projects = await getProjectList();
         res.status(200).json(projects)
     } catch (e) {
         console.error(e)
@@ -71,12 +60,7 @@ router.get('/project/:id', async (req, res) => {
         return res.status(400).send('Invalid project ID');
     }
     try {
-        const responseList = await prisma.developmentLog.findMany({
-            where: { projectId: id },
-            orderBy: {
-                id: 'asc',
-            }
-        })
+        const responseList = await getDevelopmentLogList(id);
         const createProjectList =
             responseList.reduce((acc, item, idx) =>
                 acc.concat(createLi('development', {name: `${idx + 1} 일차`, id: item.id})), createUl(''));
@@ -112,9 +96,6 @@ router.get('/project/:id', async (req, res) => {
                 }
             };
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyOSTheme);
-            document.querySelectorAll('a').forEach((e) => {
-                e.setAttribute('target', '_blank');
-            })
         </script>
         </body>
         </html>

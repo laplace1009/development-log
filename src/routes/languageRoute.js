@@ -1,9 +1,7 @@
 const express = require('express');
-const {PrismaClient} = require("@prisma/client");
-const {getLanguages} = require("../services/registerLogField");
 const router = express.Router();
-const prisma = new PrismaClient();
 const authMiddleware = require("../middleware/authMiddleware");
+const {getLanguage, createLanguage, getLanguageList} = require("../services/developmentLog");
 
 router.get('/language', authMiddleware, (req, res) => {
     res.send(`
@@ -18,18 +16,12 @@ router.post('/language', authMiddleware, async (req, res) => {
     try {
         const { language: text } = req.body;
         const language = text.trim().toUpperCase();
-        const lang = await prisma.language.findUnique({
-            where: {language},
-        });
+        const lang = getLanguage(language)
 
         if (lang) {
             res.status(200).send('exist language');
         } else {
-            await prisma.language.create({
-                data: {
-                    language,
-                }
-            })
+            await createLanguage(language);
             res.status(200).send('successfully registered');
         }
     } catch (e) {
@@ -39,8 +31,8 @@ router.post('/language', authMiddleware, async (req, res) => {
 });
 
 router.get('/language-list', async (req, res) => {
-    const languages = await getLanguages();
-    res.status(200).json(languages)
+    const languageList = await getLanguageList();
+    res.status(200).json(languageList)
 })
 
 module.exports = router;
