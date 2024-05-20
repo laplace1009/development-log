@@ -9,7 +9,7 @@ router.get('/development/:id', async (req, res) => {
         return res.status(400).send('Invalid project ID');
     }
     try {
-    const {text, projectId, project: {name, languageId, language: {language}}} = getDevelopmentLog(id);
+    const {text, projectId, project: {name, languageId, language: {language}}} = await getDevelopmentLog(id);
     const txt = marked.marked(text)
     res.status(200).send(`
         <!DOCTYPE html>
@@ -103,7 +103,7 @@ router.get('/development/:id', async (req, res) => {
                 const response = await fetch('/modify', {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ content: {id: ${id}, projectId: ${projectId}, text: \`${text}\`} })
+                    body: JSON.stringify({ content: {id: ${id}, projectId: ${projectId}, text: getMarkdownText() } })
                 })
                 if (response.ok) {
                     window.location.replace(\`http://localhost:8080/\`)
