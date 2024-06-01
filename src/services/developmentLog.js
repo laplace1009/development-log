@@ -33,7 +33,7 @@ const getLanguageListWithProjectList = async () => await prisma.language.findMan
 
 const getLanguageList = async () => prisma.language.findMany()
 
-const getProject = async (languageId) =>
+const getProject = async (languageId, name) =>
     prisma.project.findFirst({
         where: {
             languageId: parseInt(languageId),

@@ -29,7 +29,7 @@ router.post('/register-project', authMiddleware, async (req, res) => {
     try {
         const { languageId, name:text } = req.body;
         const name = text.trim();
-        const lang = await getProject(languageId);
+        const lang = await getProject(languageId, name);
 
         if (lang) {
             res.status(200).send('exist project');

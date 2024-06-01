@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const authMiddleware = require("../middleware/authMiddleware");
 const {createUser} = require("../services/developmentLog");
 
 router.get('/register-user', (req, res) => {
@@ -14,7 +13,7 @@ router.get('/register-user', (req, res) => {
   `);
 });
 
-router.post('/register-user', authMiddleware, async (req, res) => {
+router.post('/register-user', async (req, res) => {
     try {
         const { username, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
