@@ -106,9 +106,7 @@ router.get('/development/:id', async (req, res) => {
                     body: JSON.stringify({ content: {id: ${id}, projectId: ${projectId}, text: getMarkdownText() } })
                 });
                 if (response.ok) {
-                    await fetch('/redirect/main', {
-                        method: 'GET',
-                    });
+                    window.location.href='/redirect/main';
                 }
             });
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyOSTheme);

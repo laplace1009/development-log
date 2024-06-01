@@ -7,7 +7,7 @@ router.post('/upload', authMiddleware, async (req, res) => {
     try {
         const { project, text } = req.body.content;
         await createDevelopmentLog(project, text);
-        res.status(200).send({redirect: '/'})
+        res.redirect('/');
     } catch (e) {
         console.error(e);
         res.status(404).send('Server Error');
