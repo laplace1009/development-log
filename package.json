@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "secret": "node secret.js"
+    "secret": "node secret.js",
+    "dev": "NODE_ENV=dev node /src/app.js",
+    "start": "NODE_ENV=production node /src/app.js"
   },
   "keywords": [],
   "author": "",

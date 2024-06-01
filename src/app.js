@@ -1,8 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const routes = require('./routes/routes');
 const app = express();
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 app.use(express.text())
 app.use(express.json());
@@ -12,7 +15,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false, httpOnly: false, sameSite: 'Lax' }
+    cookie: { secure: isProduction, httpOnly: isProduction, sameSite: 'Lax' }
 }));
 
 app.use(routes);

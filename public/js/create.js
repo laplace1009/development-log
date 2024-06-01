@@ -68,13 +68,12 @@ document.getElementById('language-selector').addEventListener('change', async ()
 document.getElementById('register').addEventListener('click', async (e) => {
     e.preventDefault();
     try {
-        const response = await fetch(`/upload`, {
+        await fetch(`/upload`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ content: { project: projectElem.value, text: getMarkdownText() } }),
         });
-        const { redirect } = await response.json();
-        window.location.href = `http://localhost:8080${redirect}`
+        window.location.href = '/redirect/main';
     } catch (e) {
         console.error(e);
     }
