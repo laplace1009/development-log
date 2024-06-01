@@ -41,7 +41,11 @@ const getProject = async (languageId, name) =>
         }
     });
 
-const getProjectList = async () => prisma.project.findMany()
+const getProjectList = async (languageId) => prisma.project.findMany({
+    where: {
+        languageId,
+    }
+})
 
 const createProject = async (languageId, name) =>
     prisma.project.create({

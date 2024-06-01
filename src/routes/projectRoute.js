@@ -43,9 +43,9 @@ router.post('/register-project', authMiddleware, async (req, res) => {
     }
 });
 
-router.get('/project-list', async (req, res) => {
+router.get('/project-list/:id', async (req, res) => {
     try {
-        const projects = await getProjectList();
+        const projects = await getProjectList(parseInt(req.params.id));
         res.status(200).json(projects)
     } catch (e) {
         console.error(e)

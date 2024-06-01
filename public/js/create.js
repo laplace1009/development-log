@@ -50,9 +50,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-document.getElementById('language-selector').addEventListener('change', async () => {
+document.getElementById('language-selector').addEventListener('change', async (e) => {
     try {
-        const response = await fetch(`/project-list`, {
+        const response = await fetch(`/project-list/${e.currentTarget.value}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         });
