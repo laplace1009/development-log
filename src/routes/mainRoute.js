@@ -8,6 +8,16 @@ router.get('/main-view', async (req, res) => {
         res.status(200).json(languageListAndProjectList)
     } catch (e) {
         console.error(e);
+        res.status(500).send('Server Error');
+    }
+});
+
+router.get('/redirect/main', async (req, res) => {
+    try {
+        res.render('/');
+    } catch (e) {
+        console.error(e);
+        res.status(500).send('Server Error')
     }
 })
 

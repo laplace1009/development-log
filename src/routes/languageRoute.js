@@ -16,7 +16,7 @@ router.post('/language', authMiddleware, async (req, res) => {
     try {
         const { language: text } = req.body;
         const language = text.trim().toUpperCase();
-        const lang = getLanguage(language)
+        const lang = await getLanguage(language)
 
         if (lang) {
             res.status(200).send('exist language');

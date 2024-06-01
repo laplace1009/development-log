@@ -3,7 +3,7 @@ const crypto = require('crypto');
 const sessionSecretKey = crypto.randomBytes(16).toString('hex')
 const accessSecretKey = crypto.randomBytes(16).toString('hex');
 const refreshSecretKey = crypto.randomBytes(16).toString('hex');
-writeSecret(sessionSecretKey, accessSecretKey, refreshSecretKey)
+await writeSecret(sessionSecretKey, accessSecretKey, refreshSecretKey)
 
 async function writeSecret(session, access, refresh) {
     const key = `\nSESSION_SECRET=${session}\nACCESS_SECRET_KEY=${access}\nREFRESH_SECRET_KEY=${refresh}`;

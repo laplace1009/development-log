@@ -2,9 +2,9 @@ import {createLi, createUl} from "./utils.js";
 
 const main = document.getElementById('languages')
 const createProjectList = (projectList) =>
-    projectList.reduce((acc, {language, project}) =>
-        createUl(language).concat(project.reduce((acc, project) =>
-            acc.concat(createLi(project)), ``)), ``)
+    projectList.reduce((ul, {language, project}) =>
+        ul.concat(createUl(language).concat(project.reduce((li, project) =>
+            li.concat(createLi(project)), ``))), ``)
 
 const applyOSTheme = () => {
     const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             headers: {'Content-Type': 'application/json'},
         });
         const projectList = await response.json();
-        console.log(projectList);
         main.innerHTML = createProjectList(projectList)
     } catch (error) {
         console.error(error)
